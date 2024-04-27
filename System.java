@@ -1,15 +1,12 @@
 package BankSystem;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class System{
     public static void main(String[] args) throws IOException{
-        String currentDir = "/home/egecik/Masaüstü/JavaDersleri/BankSystem";// example/..../example/BankSystem/
+        String currentDir = "/home/egecik/Masaüstü/JavaDersleri/BankSystem/";// example/..../example/BankSystem/
         String accountInfoPath = currentDir + "AccountInfo.txt";
         String transferInfoPath = currentDir + "TransferInfo.txt";
 
