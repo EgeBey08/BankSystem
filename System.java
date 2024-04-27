@@ -2,11 +2,13 @@ package BankSystem;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class System{
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws IOException{
         String currentDir = "/home/egecik/Masaüstü/JavaDersleri/BankSystem";// example/..../example/BankSystem/
         String accountInfoPath = currentDir + "AccountInfo.txt";
         String transferInfoPath = currentDir + "TransferInfo.txt";
@@ -25,6 +27,7 @@ public class System{
 
         readAccountInfo(acctNums, names, surnames, balances, accountInfoPath);
         readTransferInfo(transferIdList, acctNumFromList, acctNumToList, amountlist, transferInfoPath);
+        makeAllTransfers(transferIdList, acctNumFromList, acctNumToList, amountlist, acctNums, balances, currentDir + "System.log");
     }
     static int numberOflines(String filePath) throws FileNotFoundException{
         Scanner scan = new Scanner(new File(filePath));
@@ -103,5 +106,26 @@ public class System{
             deposit(balances, indexOf(acctNums, acctNumTo), amount);
             return 0;
         }
+    }
+    static void makeAllTransfers(int[] transferIds, int[] acctNumFromList, int[] acctNumToList, double[] amountList, int[] acctNums, double[] balances, String filePath) throws IOException{
+        FileWriter writer = new FileWriter(new File(filePath));
+        for(int i = 0; i < transferIds.length; i++){
+            String response = transferResponse(transfer(acctNums, balances, acctNumFromList[i], acctNumToList[i], amountList[i]), transferIds[i]);
+            writer.write(response);
+        }
+        writer.close();
+    }
+    static String transferResponse(int transferCase, int transferId){
+        switch(transferCase){
+            case 0:
+                return String.format("Transfer TR%s resulted in code 0: TransferSuccesful\n", transferId);
+            case 1:
+                return String.format("Transfer TR%s resulted in code 1: To Account not found\n", transferId);
+            case 2:
+                return String.format("Transfer TR%s resulted in code 2: From Account not found\n", transferId);
+            case 3:
+                return String.format("Transfer TR%s resulted in code 3: Insufficient Funds\n", transferId);
+        }
+        return null;
     }
 }
