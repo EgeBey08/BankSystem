@@ -21,6 +21,9 @@ public class System{
         int[] acctNumFromList = new int[numberOfTransfers];
         int[] acctNumToList = new int[numberOfTransfers];
         double[] amountlist = new double[numberOfTransfers];
+
+        readAccountInfo(acctNums, names, surnames, balances, accountInfoPath);
+        readTransferInfo(transferIdList, acctNumFromList, acctNumToList, amountlist, transferInfoPath);
     }
     static int numberOflines(String filePath) throws FileNotFoundException{
         Scanner scan = new Scanner(new File(filePath));
@@ -31,5 +34,30 @@ public class System{
         }
         scan.close();
         return count;
+    }
+    static void readAccountInfo(int[] acctNums, String[] names, String[] surnames, double[] balances, String filePath) throws FileNotFoundException{
+        Scanner scan = new Scanner(new File(filePath));
+        int count = 0;
+        while(scan.hasNextLine()){
+            acctNums[count] = scan.nextInt();
+            names[count] = scan.next();
+            surnames[count] = scan.next();
+            balances[count] = scan.nextDouble();
+            count ++;
+        }
+        scan.close();
+    }
+    static void readTransferInfo(int[] idList, int[] acctNumFromList, int[] acctNumToList, double[] amountList, String filePath) throws FileNotFoundException{
+        Scanner scan = new Scanner(new File(filePath));
+        int count = 0;
+        while(scan.hasNextLine()){
+            String id = scan.next();
+            idList[count] = Integer.parseInt(id.substring(id.length()-2));
+            acctNumFromList[count] = scan.nextInt();
+            acctNumToList[count] = scan.nextInt();
+            amountList[count] = scan.nextDouble();
+            count ++;
+        }
+        scan.close();
     }
 }
