@@ -80,4 +80,28 @@ public class System{
             return false;
         }
     }
+    static int indexOf(int[] arr, int element){
+        int index = 0;
+        for(int item : arr){
+            if(item == element){
+                return index;
+            }
+            index ++;
+        }
+        return 666;
+    }
+    static int transfer(int[] acctNums, double[] balances, int acctNumFrom, int acctNumTo, double amount){
+        if(indexOf(acctNums, acctNumTo) == 666){
+            return 1;
+        }else if(indexOf(acctNums, acctNumFrom) == 666){
+            return 2;
+        }else if(!withdrawal(balances, indexOf(acctNums, acctNumFrom), amount)){
+            return 3;
+        }else{
+            // succesful
+            withdrawal(balances, indexOf(acctNums, acctNumFrom), amount);
+            deposit(balances, indexOf(acctNums, acctNumTo), amount);
+            return 0;
+        }
+    }
 }
