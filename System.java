@@ -2,6 +2,7 @@ package BankSystem;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class System{
@@ -59,5 +60,24 @@ public class System{
             count ++;
         }
         scan.close();
+    }
+    static boolean deposit(double[] balances, int index, double amount){
+        try{
+            balances[index] += amount;
+            return true;
+        }catch(InputMismatchException exception){
+            return false;
+        }
+    }
+    static boolean withdrawal(double[] balances, int index, double amount){
+        try{
+            if((balances[index] - amount) >= 0){
+                balances[index] -= amount;
+                return true;
+            }
+            return false;
+        }catch(InputMismatchException exception){
+            return false;
+        }
     }
 }
