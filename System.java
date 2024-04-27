@@ -28,6 +28,7 @@ public class System{
         readAccountInfo(acctNums, names, surnames, balances, accountInfoPath);
         readTransferInfo(transferIdList, acctNumFromList, acctNumToList, amountlist, transferInfoPath);
         makeAllTransfers(transferIdList, acctNumFromList, acctNumToList, amountlist, acctNums, balances, currentDir + "System.log");
+        writeAccountInfo(acctNums, names, surnames, balances, currentDir + "AccountInfoOut.txt");
     }
     static int numberOflines(String filePath) throws FileNotFoundException{
         Scanner scan = new Scanner(new File(filePath));
@@ -127,5 +128,14 @@ public class System{
                 return String.format("Transfer TR%s resulted in code 3: Insufficient Funds\n", transferId);
         }
         return null;
+    }
+    static void writeAccountInfo(int[] acctNums, String[] names, String[] surnames, double[] balances, String filePath) throws IOException{
+        FileWriter writer = new FileWriter(new File(filePath));
+        int count = 0;
+        while(count < acctNums.length){
+            writer.write(String.format("%s %s %s %s\n", acctNums[count], names[count], surnames[count], balances[count]));
+            count ++;
+        }
+        writer.close();
     }
 }
